@@ -18,25 +18,32 @@ public class IMCServlet extends HttpServlet {
 	private static final float NORMAL =  25;
 	private static final float ACIMA =  30;
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		
 		processing(request, response);
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processing(request, response); 
+		
+		
+		processing(request, response);
+		
+		 
 	}
 	
-	private void processing(HttpServletRequest request, HttpServletResponse response) throws IOException{
+	private void processing(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		String weight = request.getParameter("weight");
 		String height = request.getParameter("height");
 		
 		weight = weight.replaceAll(",", ".");
 		height = height.replaceAll(",", ".");
 		
-		response.setContentType("text/html");
+		response.setContentType("text/html");	
+		
 		PrintWriter out = response.getWriter();
 		
 		double weightDouble;
@@ -46,6 +53,9 @@ public class IMCServlet extends HttpServlet {
 			heightDouble = Double.parseDouble(height);
 			
 			double imc = calculateBMI(weightDouble, heightDouble);
+			
+			request.getRequestDispatcher("/header.html")
+			.include(request, response);
 			
 			out.printf("<br>Peso: %.2f", weightDouble);
 			out.printf("<br>Altura: %.2f", heightDouble);
@@ -64,14 +74,14 @@ public class IMCServlet extends HttpServlet {
 				out.print("Obeso");
 			}
 			
+			
 		}
 		catch (Exception e) {
-			out.println("<h1>Houve um erro no formato da entrada de dados</h1>");
-		}
-		
-		
-		
-		
+//			request.getRequestDispatcher("/error.html")
+//			.forward(request, response);
+			
+			throw new NumberFormatException("Problema de conversão numérica");
+		}		
 	}
 	
 	private double calculateBMI(double weight, double height){
