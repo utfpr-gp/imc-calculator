@@ -1,6 +1,7 @@
 package br.edu.utfpr;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -16,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(
 		urlPatterns = { "/login" }, 
 		initParams = { 
-				@WebInitParam(name = "user", value = "root"), 
-				@WebInitParam(name = "pwd", value = "qwerty")
+				@WebInitParam(name = "user-servlet", value = "root"), 
+				@WebInitParam(name = "pwd-servlet", value = "qwerty")
 		})
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,8 +29,8 @@ public class LoginServlet extends HttpServlet {
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		userDefault = config.getInitParameter("user");
-	    pwdDefault = config.getInitParameter("pwd");
+		userDefault = config.getServletContext().getInitParameter("user");
+	    pwdDefault = config.getServletContext().getInitParameter("pwd");
 	}    
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,7 +38,15 @@ public class LoginServlet extends HttpServlet {
 		String pwd = request.getParameter("password");
 		
 		if(user.equals(userDefault) && pwd.equals(pwdDefault)){
-			request.getRequestDispatcher("/WEB-INF/imc.html")
+			
+			HttpSession session = request.getSession();
+			
+			if(session.isNew()){
+				session.setAttribute("login-date", new Date());
+				session.setAttribute("is-logged-in", true); 
+			}			
+			
+			request.getRequestDispatcher("/imc-form")
 			.forward(request, response);
 		}
 		else{
