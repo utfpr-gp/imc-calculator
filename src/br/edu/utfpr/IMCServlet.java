@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -72,6 +73,13 @@ public class IMCServlet extends HttpServlet {
 			}
 			else{
 				out.print("Obeso");
+			}
+			
+			Cookie[] cookies = request.getCookies();
+			for(Cookie c : cookies){
+				if(c.getName().equals("login-date")){
+					out.println("Data de login: " + c.getValue());
+				}
 			}
 			
 			

@@ -7,6 +7,7 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,8 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class LoginServlet
  */
 @WebServlet(
-		urlPatterns = { "/login" }, 
+		urlPatterns = { "/login" },
+		name = "LoginServlet",
 		initParams = { 
 				@WebInitParam(name = "user-servlet", value = "root"), 
 				@WebInitParam(name = "pwd-servlet", value = "qwerty")
@@ -43,9 +45,12 @@ public class LoginServlet extends HttpServlet {
 			
 			if(session.isNew()){
 				session.setAttribute("login-date", new Date());
-				session.setAttribute("is-logged-in", true); 
+				session.setAttribute("is-logged-in", true);
+				
+				Cookie cookie = new Cookie("login-date", new Date().toString());
+				response.addCookie(cookie);
 			}			
-			
+						
 			request.getRequestDispatcher("/imc-form")
 			.forward(request, response);
 		}
