@@ -9,3 +9,14 @@ Este sistema é utilizado para ensinamento introdutório de Java EE na disciplin
 + Calculadora de IMC.
 + Controle de erros.
 + Redirecionamento para calculadora externa.
+
+## Tecnologias
++ Servlets
++ JSP com MVC
++ Expression Language e JSTL
++ Template
++ Materialize com layout responsivo
+
+## Ferramentas
++ Eclipse
++ Tomcat
