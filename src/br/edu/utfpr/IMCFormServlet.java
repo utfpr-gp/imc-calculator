@@ -12,13 +12,14 @@ public class IMCFormServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(request.getSession(false) != null){
-			request.getRequestDispatcher("/WEB-INF/imc.html")
+		Boolean isLoggedIn = (Boolean)request.getSession().getAttribute("isLoggedIn");
+		if(isLoggedIn){
+			String address = "/WEB-INF/view/imc.jsp";
+			request.getRequestDispatcher(address)
 			.forward(request, response);
 		}
 		else{
-			response.sendRedirect("index.html"); 
+			response.sendRedirect("index.jsp"); 
 		}
 		
 	}

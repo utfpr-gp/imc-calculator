@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 				DispatcherType.REQUEST, 
 				DispatcherType.FORWARD
 		}
-					, urlPatterns = {"/index.html" })
+					, urlPatterns = {"/index.jsp" })
 public class SessionFilter implements Filter {
 
 
@@ -37,14 +37,15 @@ public class SessionFilter implements Filter {
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Filtro");
-		if(((HttpServletRequest)request).getSession(false) == null){
+		Boolean isLoggedIn = (Boolean)((HttpServletRequest)request).getSession().getAttribute("isLoggedIn");
+		
+		if(isLoggedIn == null){
 			System.out.println("sem sessão");
 			chain.doFilter(request, response);
 		}	
 		else{
-			System.out.println("com sessão");
-			((HttpServletResponse)response).sendRedirect("imc-form");			
+			System.out.println("com sessão " + ((HttpServletRequest)request).getSession(false));
+			((HttpServletResponse)response).sendRedirect(request.getServletContext().getContextPath() + "/imc-form");			
 		}		
 	}
 
@@ -54,5 +55,4 @@ public class SessionFilter implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
-
 }

@@ -36,22 +36,27 @@ public class LoginServlet extends HttpServlet {
 	}    
 		
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String user = request.getParameter("user");
+		String user = request.getParameter("username");
 		String pwd = request.getParameter("password");
 		
 		if(user.equals(userDefault) && pwd.equals(pwdDefault)){
 			
 			HttpSession session = request.getSession();
-			
-			if(session.isNew()){
-				session.setAttribute("login-date", new Date());
-				session.setAttribute("is-logged-in", true);
+			Boolean isLoggedIn = (Boolean)session.getAttribute("isLoggedIn");
+						
+			if(isLoggedIn == null){				
+				
+				session.setAttribute("loginDate", new Date());
+				session.setAttribute("isLoggedIn", true);
+				
+				System.out.println("Criando a sessão");
 				
 				Cookie cookie = new Cookie("login-date", new Date().toString());
 				response.addCookie(cookie);
 			}			
-						
-			request.getRequestDispatcher("/imc-form")
+			
+			String address = "/imc-form";
+			request.getRequestDispatcher(address)
 			.forward(request, response);
 		}
 		else{

@@ -29,9 +29,11 @@ public class LoginFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
-		if(request.getParameter("user").isEmpty() || request.getParameter("password").isEmpty() ||
-				request.getParameter("user") == null || request.getParameter("password") == null){
-			((HttpServletResponse)response).sendRedirect("index.html");
+		if(request.getParameter("username") == null || 
+				request.getParameter("password") == null || 
+				request.getParameter("username").isEmpty() || 
+				request.getParameter("password").isEmpty()){
+			((HttpServletResponse)response).sendRedirect("index.jsp");
 			
 		}
 		else{			
