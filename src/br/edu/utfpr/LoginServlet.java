@@ -1,6 +1,7 @@
 package br.edu.utfpr;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.ServletConfig;
@@ -51,7 +52,8 @@ public class LoginServlet extends HttpServlet {
 				
 				System.out.println("Criando a sessão");
 				
-				Cookie cookie = new Cookie("login-date", new Date().toString());
+				String f = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+				Cookie cookie = new Cookie("login-date", f);
 				response.addCookie(cookie);
 			}			
 			
