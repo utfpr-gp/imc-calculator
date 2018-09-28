@@ -20,6 +20,6 @@
 			<p>
 				<button type="submit" class="waves-effect waves-light btn green darken-3">Calcular</button>
 			</p>
-		</form>
+		</form>		
 	</jsp:body>
 </t:template>

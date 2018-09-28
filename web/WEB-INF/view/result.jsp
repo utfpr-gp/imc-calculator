@@ -9,9 +9,8 @@
 		<div class="row">				
 		<div class="card col s12">
             <span class="card-title">Atual</span>
-            <div class="card-image">
-                <span class="card-title">${bean.showCategory()}</span>
-                
+            <div>
+                <span class="card-title">${bean.showCategory()}</span>                
             </div>
             <div class="card-content">                       
                 <p>Peso: ${bean.weight}</p>

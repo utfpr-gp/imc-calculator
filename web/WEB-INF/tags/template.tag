@@ -9,7 +9,7 @@
 
 <%-- The list of normal or fragment attributes can be specified here: --%>
 <%@attribute name="title"%>
-<%@attribute name="isLoggedIn"%>
+
 
 <html>
 <head>
